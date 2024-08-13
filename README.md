@@ -123,7 +123,7 @@ automatically run to get the day before's information.
 
 - I always am finding different ways/fun ways to log info to the console, so that will constantly be in flux.
 
-- *Queue for scrape tasks* - I'd like to replace the Promise.all pattern I use in index.js and scrape_pdfs.js so I can fine tune things easier.
+- *Queue for scrape tasks* - I'd like to replace the Promise.all pattern I use in `index.js` and `target/scrape_pdfs.js` so I can fine tune things easier.
 
 - *Retry limit for scraping* - Current implementation has an exponential backoff in `scrape.js short_delay()` but endlessly hits the same URL until the scrape is successful.
 

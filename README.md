@@ -36,7 +36,6 @@ for(let i = 0; i < task_split.length; i++){
 3. Scrape gets performed in parallel using the `pLimit` module.
 ```javascript
 const fetchOptions = fetchGen.new_fetch_options()
-let skip = false
 const response = await REQUEST_LIMIT(async () => 
 {
     try {

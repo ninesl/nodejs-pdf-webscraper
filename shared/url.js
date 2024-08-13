@@ -23,10 +23,10 @@ export function determine_pdf_url(...args) {
 export const TOP_HTML = hidden.TOP_HTML
 export const BOTTOM_HTML = hidden.BOTTOM_HTML
 
-export function parse_date_row(row){
-    return hidden.date_row(row)
+export function parse_date_row(...args){
+    return hidden.date_row(...args)
 }
 
-export function determine_date_url(s_task) {
-    return hidden.date_url(s_task)
+export function determine_date_url(...args) {
+    return hidden.date_url(...args)
 }

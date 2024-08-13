@@ -9,15 +9,15 @@ Each scrape is run in parallel using the `pLimit` module
 ## Step-by-Step
 `node ./index.js`
 1. Assigns scraping tasks
-    for(let i = 0; i < date_length; i++) {
+`    for(let i = 0; i < date_length; i++) {
         scrape_tasks.push(async () => {
             let pdfs_to_get = await start_scrape_date(dates[i])
             dates[i]['pdfs_to_get'] = pdfs_to_get
             await scrape_pdfs_by_date(dates[i])
         })
-    }
+    }`
 2. Run tasks in batches with async. I use this Promise.all pattern for these tasks and for scraping the PDFs.
-    const task_limit = 10
+`    const task_limit = 10
     let task_split = split_array(scrape_tasks, task_limit)
     console.log("Starting date scrape for", task_limit, "date tasks")
     for(let i = 0; i < task_split.length; i++){
@@ -30,12 +30,12 @@ Each scrape is run in parallel using the `pLimit` module
                 console.log('****************')
             }
         }))
-    }
+    }`
 3. Each PDF gets saved locally using the `promisfy` module
 
 - While running, scrape progress is console.log()'d to the screen 
 - . means pdf already downloaded, # means pdf not found and is getting queued to scrape
-    ...
+`    ...
     |11/6/2012 ........ |
     |11/9/2012 .........#...#....##.# |
     5 pdf tasks for 11/9/2012
@@ -47,14 +47,14 @@ Each scrape is run in parallel using the `pLimit` module
     Downloaded PARENT_DIRECTORY/countryCode/pdfCode1/2012/11/pdfCode_11092012.pdf
     Downloaded PARENT_DIRECTORY/countryCode/pdfCode2/2012/11/pdfCode_11092012.pdf
     |11/13/2012 ........ |
-    ...
+    ...`
 
 Each scrape request uses a different IP by rotating through a list of proxies from a .txt file formatted like so:
-    //proxies.txt
+`    //proxies.txt
     1.1.1.1:0000
     2.2.2.2:0001
     3.3.3.3:0002
-    ...
+    ...`
 
 ## Project Structure
 NODE-JS-WEBSCRAPER/

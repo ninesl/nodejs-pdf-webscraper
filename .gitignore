@@ -1,0 +1,4 @@
+/node_modules
+*.txt
+package-lock.json
+/shared/hidden_info.js

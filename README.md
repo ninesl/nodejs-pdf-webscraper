@@ -7,6 +7,8 @@ This Node.js project uses proxies to asynchronously scrape a specific website an
 `node ./index.js`
 
 1. Assign scraping tasks
+
+>`index.js`
 ```javascript
 for(let i = 0; i < date_length; i++) {
     scrape_tasks.push(async () => {
@@ -17,6 +19,8 @@ for(let i = 0; i < date_length; i++) {
 }
 ```
 2. Run tasks in batches with async. I use this Promise.all pattern for these tasks and for scraping the PDFs.
+
+>`index.js`
 ```javascript
 const task_limit = 10
 let task_split = split_array(scrape_tasks, task_limit)
@@ -34,6 +38,8 @@ for(let i = 0; i < task_split.length; i++){
 }
 ```
 3. Scrape gets performed in parallel using the `pLimit` module.
+
+> `scrape/scrape.js`
 ```javascript
 const fetchOptions = fetchGen.new_fetch_options()
 const response = await REQUEST_LIMIT(async () => 
@@ -47,6 +53,8 @@ const response = await REQUEST_LIMIT(async () =>
 })
 ```
 4. Each PDF gets saved locally using the `promisfy` and `pipeline` modules
+
+> `target/scrape_pdf.js`
 ```javascript
 const pipelineAsync = promisify(pipeline)
     
@@ -61,8 +69,9 @@ await pipelineAsync(response_info.body.stream(), fileStream).then(() => {
 5. While running, scrape progress is console.log()'d to the screen
 
 `.` means the pdf is already downloaded, `#` means the pdf is not found and is getting queued to scrape
+
+>`cli output`
 ```
-//cli output
 |11/6/2012 ........ |
 |11/9/2012 .........#...#....##.# | pdf1 pdf2 pdf3 pdf4 pdf5
 5 pdf tasks for 11/9/2012
@@ -78,8 +87,9 @@ Downloaded PARENT_DIRECTORY/countryCode/pdf1/2012/10/pdf1_11092012.pdf
 ```
 
 Each scrape request uses a different IP by rotating through a list of proxies from a .txt file formatted like so:
+
+>`proxies.txt`
 ```
-//proxies.txt
 1.1.1.1:0000
 2.2.2.2:0001
 3.3.3.3:0002

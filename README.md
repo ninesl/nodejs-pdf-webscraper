@@ -61,7 +61,7 @@ await pipelineAsync(response_info.body.stream(), fileStream).then(() => {
 5. While running, scrape progress is console.log()'d to the screen
 
 `.` means the pdf is already downloaded, `#` means the pdf is not found and is getting queued to scrape
-```TypeScript
+```
 //cli output
 |11/6/2012 ........ |
 |11/9/2012 .........#...#....##.# | pdf1 pdf2 pdf3 pdf4 pdf5
@@ -78,7 +78,7 @@ Downloaded PARENT_DIRECTORY/countryCode/pdf1/2012/10/pdf1_11092012.pdf
 ```
 
 Each scrape request uses a different IP by rotating through a list of proxies from a .txt file formatted like so:
-```C#
+```
 //proxies.txt
 1.1.1.1:0000
 2.2.2.2:0001
@@ -87,7 +87,7 @@ Each scrape request uses a different IP by rotating through a list of proxies fr
 ```
 
 ## Project Structure
-```C#
+```
 NODEJS-PDF-WEBSCRAPER/
 │
 ├── scrape/ # Core scraping functionalities

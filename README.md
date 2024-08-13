@@ -59,6 +59,7 @@ await pipelineAsync(response_info.body.stream(), fileStream).then(() => {
 })
 ```
 5. While running, scrape progress is console.log()'d to the screen
+6. 
 `.` means the pdf is already downloaded, `#` means the pdf is not found and is getting queued to scrape
 ```TypeScript
 //cli output

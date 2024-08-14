@@ -50,7 +50,7 @@ async function scrape_pdfs_by_date(date) {
     console.log()
     if(tasks.length > 0) {
         tasks = shuffle_array(tasks)
-        const task_limit = 3
+        const task_limit = 10
         let task_split = split_array(tasks, task_limit)
         console.log(tasks.length, "pdf tasks for", date_msg)
         for(let i = 0; i < task_split.length; i++){

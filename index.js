@@ -2,7 +2,7 @@ import { start_scrape_date } from './target/scrape_date.js';
 import { scrape_pdfs_by_date } from './target/scrape_pdf.js';
 import { split_array } from './shared/util.js';
 
-const START_DATE = new Date(2012, 9, 15)
+const START_DATE = new Date(2016, 11, 15)
 const END_DATE = new Date(2020, 0, 1)
 // const START_DATE = new Date(2000, 0, 1)
 
@@ -35,7 +35,7 @@ async function start_scrape_pdfs() {
     }
 
     // scrape_tasks = shuffle_array(scrape_tasks)
-    const task_limit = 10
+    const task_limit = 6
     let task_split = split_array(scrape_tasks, task_limit)
     console.log("Starting date scrape for", task_limit, "date tasks")
     // plimit?

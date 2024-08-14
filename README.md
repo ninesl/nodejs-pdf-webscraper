@@ -82,7 +82,7 @@ Retry 1... url { host: '1.1.1.1', port: '0000', retries: 4, success: 7 }
 5 pdf tasks for 11/10/2012
 |11/8/2012 ................ |
 Downloaded PARENT_DIRECTORY/countryCode/pdf3/2012/11/pdf3_11092012.pdf
-Downloaded PARENT_DIRECTORY/countryCode/pdf1/2012/10/pdf1_11092012.pdf
+Downloaded PARENT_DIRECTORY/countryCode/pdf1/2012/11/pdf1_11102012.pdf
 |11/13/2012 ........ |
 ```
 

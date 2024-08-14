@@ -1,12 +1,18 @@
 import { scrape } from '../scrape/scrape.js';
-import { determine_date_url, parse_date_row, TOP_HTML, BOTTOM_HTML } from '../shared/url.js';
+import { determine_date_url, parse_date_row, TOP_HTML, BOTTOM_HTML, NONE_HTML } from '../shared/url.js';
 
 function parse_date_table(response_text) {
+    let pdfs_this_date = {}
+
     const start = response_text.indexOf(TOP_HTML) + TOP_HTML.length
     const end = response_text.indexOf(BOTTOM_HTML)
     const dateTableHTML = response_text.substring(start,end)
 
-    let pdfs_this_date = {}
+    //Checks if response_text is supposed to have dates
+    if(dateTableHTML.indexOf(NONE_HTML) > -1) {
+        console.log("No pdfs found for this date. Skipping...")
+        return pdfs_this_date; //return blank dictionary
+    }
 
     const rows = dateTableHTML.split('\n').filter(row => row.trim() !== '');
     for(const row of rows) {

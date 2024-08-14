@@ -22,6 +22,7 @@ export function determine_pdf_url(...args) {
 //scrape_date.js
 export const TOP_HTML = hidden.TOP_HTML
 export const BOTTOM_HTML = hidden.BOTTOM_HTML
+export const NONE_HTML = hidden.NONE_HTML
 
 export function parse_date_row(...args){
     return hidden.date_row(...args)

@@ -6,12 +6,12 @@ import { is_scrape_blocked } from '../shared/url.js';
 const fetchGen = new fetchOptionsGenerator()
 const MAX_RETRIES = 3
 
-let P_LIMT_REQUEST_MAX = 8 //adjust as needed
+let P_LIMT_REQUEST_MAX = 6 //adjust as needed
 let REQUEST_LIMIT = pLimit(P_LIMT_REQUEST_MAX) 
 
 async function short_delay(ms_add, retry_count) {
     const jitter = Math.random() * 1000;
-    let ms = (ms_add + jitter) * (1 + retry_count);
+    let ms = (ms_add + jitter)// * ((1 + retry_count) / 2);
     return new Promise(resolve => setTimeout(resolve, ms + Math.floor(Math.random() * 100))); 
     // adds random 0-.1 sec
 }

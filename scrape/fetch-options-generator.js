@@ -14,15 +14,21 @@ export class fetchOptionsGenerator {
     new_fetch_options() {
         let retries = null
         let proxy = null
+        let start = this.proxy_index
         do {
             this.proxy_index += 1
+            if(this.proxy_index == start) {
+                this.proxy_index += 1 // still skip the start
+                this.threshold += 50
+                console.log("Increasing proxy threshold. Retry threshold is now", this.threshold)
+            }
             if(this.proxy_index >= this.PROXIES.length)
                 this.proxy_index = 0
             proxy = this.PROXIES[this.proxy_index];
             retries = this.PROXIES[this.proxy_index].retries
+            // console.log("rotating a proxy")
         } while(retries > this.threshold)
-        if(!proxy)
-            throw new Error('Proxy was null')
+
         return create_fetch_options(proxy, this.proxy_index);
     }
     increment_retry(fetchOptions) {

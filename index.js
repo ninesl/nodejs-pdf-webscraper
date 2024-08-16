@@ -1,13 +1,13 @@
 import { start_scrape_date } from './target/scrape_date.js';
 import { scrape_pdfs_by_date } from './target/scrape_pdf.js';
-import { split_array } from './shared/util.js';
+import { split_array, keypress } from './shared/util.js';
 
-const START_DATE = new Date(2004, 10, 0)
-const END_DATE = new Date(2009, 0, 1)
+const START_DATE = new Date(2024, 7, 16)
+// const END_DATE = new Date(2009, 0, 1)
+const END_DATE = new Date()
 // const START_DATE = new Date(2000, 0, 1)
 
 function set_dates() {
-    const now = new Date();
     let dates = [];
     //1991
     for (let d = START_DATE; d <= END_DATE; d.setDate(d.getDate() + 1)) {
@@ -53,3 +53,8 @@ async function start_scrape_pdfs() {
 }
 
 await start_scrape_pdfs();
+console.log("INSERTING INTO DATABASE HERE")
+console.log("Tasks complete. Press any key to exit...")
+await keypress()
+console.log("Goodbye!")
+process.exit()

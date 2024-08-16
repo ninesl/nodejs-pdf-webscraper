@@ -11,7 +11,7 @@ let REQUEST_LIMIT = pLimit(P_LIMT_REQUEST_MAX)
 
 async function short_delay(ms_add, retry_count) {
     const jitter = Math.random() * 1000;
-    let ms = (ms_add + jitter)// * ((1 + retry_count) / 2);
+    let ms = (ms_add + jitter) * ((1 + retry_count) / 2);
     return new Promise(resolve => setTimeout(resolve, ms + Math.floor(Math.random() * 100))); 
     // adds random 0-.1 sec
 }

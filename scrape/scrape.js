@@ -30,7 +30,7 @@ async function scrape(url) {
                 await short_delay(500, retry_count)
                 return await fetch(url, fetchOptions.options)
             } catch (e) {
-                console.log(`${e.message}`)
+                // console.log(`${e.message}`)
                 skip = true
             }
             
@@ -38,11 +38,15 @@ async function scrape(url) {
             // time_taken = (endTime-startTime)
         });
         if(skip || response.status !== 200) {
-            fetchGen.increment_retry(fetchOptions)
             if(skip) {
-                console.log(`Error fetching ${url}`)
+                // console.log(`Error fetching ${url}`)
+                process.stdout.write(`-`)
+            } else {
+                process.stdout.write(`.`)
             }
-            process.stdout.write(`Retry ${++retry_count}... ${url} `)
+            fetchGen.increment_retry(fetchOptions)
+            // process.stdout.write(`Retry ${++retry_count}... ${url} `)
+            ++retry_count
             continue
         }
 
@@ -56,7 +60,9 @@ async function scrape(url) {
 
         // target specific implementation
         if(is_scrape_blocked(response_info.response_text)) {
-            process.stdout.write(`Retry ${++retry_count}... ${url} `)
+            // process.stdout.write(`Retry ${++retry_count}... ${url} `)
+            ++retry_count
+            process.stdout.write(`.`)
             fetchGen.increment_retry(fetchOptions)
             continue
         }

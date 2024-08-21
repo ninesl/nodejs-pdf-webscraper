@@ -2,7 +2,7 @@ import { start_scrape_date } from './target/scrape_date.js';
 import { scrape_pdfs_by_date } from './target/scrape_pdf.js';
 import { split_array, keypress } from './shared/util.js';
 
-const START_DATE = new Date(2024, 7, 16)
+const START_DATE = new Date(2024, 7, 19)
 // const END_DATE = new Date(2009, 0, 1)
 const END_DATE = new Date()
 // const START_DATE = new Date(2000, 0, 1)

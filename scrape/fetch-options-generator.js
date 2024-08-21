@@ -33,7 +33,7 @@ export class fetchOptionsGenerator {
     }
     increment_retry(fetchOptions) {
         this.PROXIES[fetchOptions.proxy_index].retries++
-        console.log(this.PROXIES[fetchOptions.proxy_index])
+        // console.log("r", this.PROXIES[fetchOptions.proxy_index].retries, "s", this.PROXIES[fetchOptions.proxy_index].success)
         // process.stdout.write(JSON.stringify(this.PROXIES[fetchOptions.proxy_index]));
     }
     increment_success(fetchOptions) {

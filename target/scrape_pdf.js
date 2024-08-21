@@ -27,7 +27,7 @@ function set_scrape_pdf_task(pdfCode, countryCode, date) {
     return scrape_pdf_task
 }
 
-let pdfs_downloaded = 0
+let pdfs_queued = 0
 async function scrape_pdfs_by_date(date) {
     let tasks = []
     const pdfs_to_get = date.pdfs_to_get
@@ -52,12 +52,13 @@ async function scrape_pdfs_by_date(date) {
         tasks = shuffle_array(tasks)
         const task_limit = 10
         let task_split = split_array(tasks, task_limit)
-        console.log(tasks.length, "pdf tasks for", date_msg)
+        pdfs_queued += tasks.length
+        console.log(tasks.length, "pdf tasks for", date_msg, "pdfs queued:",pdfs_queued)
         for(let i = 0; i < task_split.length; i++){
             await Promise.all(task_split[i].map(async (task) => {
                 try {
                     await scrape_pdf(task)
-                    pdfs_downloaded += 1
+                    console.log(`${--pdfs_queued} pdfs_queued`)
                 } catch (error) {
                     console.log('********scrape_pdfs() scrape_pdf.js********')
                     console.log(task, error)

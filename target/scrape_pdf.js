@@ -3,7 +3,7 @@ import { promisify } from 'util';
 import { pipeline } from 'stream';
 import fs from 'fs';
 import { split_array, shuffle_array } from '../shared/util.js';
-import { determine_pdf_url, PARENT_PDF_FOLDER } from '../shared/url.js';
+import { determine_pdf_url, PARENT_PDF_FOLDER, PDF_NOT_FOUND_HTML } from '../shared/url.js';
 
 // month, day, year, pdfCode, countrycode
 // gathered from scrape_date and passed into here
@@ -69,12 +69,30 @@ async function scrape_pdfs_by_date(date) {
     }
 }
 
+function write_error(url) {
+    try {
+        fs.appendFileSync('err_pdfs.txt', url + '\n');
+    } catch (error) {
+        console.error(`Failed to append error URL: ${url}`, error);
+    }
+}
 async function scrape_pdf(scrape_pdf_task) {
     let response_info = await scrape(scrape_pdf_task.url).then(async (response_info) => {
-        if (!response_info.content_type.includes('application/pdf'))
+        while(!response_info.content_type.includes('application/pdf') || response_info.size < 5000) {// 5kb
+            if(response_info.response_text.includes(PDF_NOT_FOUND_HTML)) {
+                write_error(scrape_pdf_task.url)
+                return null
+            }
             console.log(`response_info.content_type is ${response_info.content_type}. Retrying...`)
-            return await scrape(scrape_pdf_task.url)
+            console.log(`response_info.size is ${response_info.size}. Retrying...`)
+            response_info = await scrape(scrape_pdf_task.url)
+        }
+        return response_info
     });
+
+    if(!response_info) {
+        return;
+    }
 
     if (!fs.existsSync(scrape_pdf_task.pdfDirectory)) {
         console.log(`\nCreating directory: ${scrape_pdf_task.pdfDirectory}`);

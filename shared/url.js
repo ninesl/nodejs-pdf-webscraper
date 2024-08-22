@@ -15,6 +15,8 @@ export function is_scrape_blocked(...args) {
 }
 
 //scrape_pdfs.js
+export const PDF_NOT_FOUND_HTML = hidden.PDF_NOT_FOUND_HTML
+
 export function determine_pdf_url(...args) {
     return hidden.pdf_url(...args)
 }

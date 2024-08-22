@@ -4,7 +4,9 @@ import { split_array, keypress } from './shared/util.js';
 
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away
-const START_DATE = new Date(2023,6, 23) // 7/23/2023 TODO
+const START_DATE = new Date(1991, 0, 1)
+
+const TASKS_AT_A_TIME = 40
 
 function set_dates() {
     let dates = [];
@@ -34,7 +36,7 @@ async function start_scrape_pdfs() {
     }
 
     // scrape_tasks = shuffle_array(scrape_tasks)
-    const task_limit = 6
+    const task_limit = TASKS_AT_A_TIME
     let task_split = split_array(scrape_tasks, task_limit)
     // plimit?
     for(let i = 0; i < task_split.length; i++){

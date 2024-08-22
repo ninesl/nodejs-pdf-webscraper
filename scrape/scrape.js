@@ -4,13 +4,15 @@ import pLimit from 'p-limit';
 import { fetchOptionsGenerator } from './fetch-options-generator.js'
 import { is_scrape_blocked } from '../shared/url.js';
 const fetchGen = new fetchOptionsGenerator()
-const MAX_RETRIES = 3
 
-let P_LIMT_REQUEST_MAX = 6 //adjust as needed
+let P_LIMT_REQUEST_MAX = 15 //adjust as needed
 let REQUEST_LIMIT = pLimit(P_LIMT_REQUEST_MAX) 
 
 async function short_delay(ms_add, retry_count) {
     const jitter = Math.random() * 1000;
+    if (retry_count > 10) {
+        retry_count = 10
+    }
     let ms = (ms_add + jitter) * ((1 + retry_count) / 2);
     return new Promise(resolve => setTimeout(resolve, ms + Math.floor(Math.random() * 100))); 
     // adds random 0-.1 sec
@@ -68,12 +70,7 @@ async function scrape(url) {
         }
         fetchGen.increment_success(fetchOptions)
         return response_info;
-    } while(true);//uh oh
-
-    if(retry_count >= MAX_RETRIES)
-        throw new Error(`Max retries reached`)
-
-    return response_info;
+    } while(true);//uh oh. retry logic here. queue?
 }
 
 export { scrape, REQUEST_LIMIT };

@@ -38,7 +38,7 @@ export class fetchOptionsGenerator {
     }
     increment_success(fetchOptions) {
         this.PROXIES[fetchOptions.proxy_index].success++
-        // process.stdout.write(JSON.stringify(this.PROXIES[fetchOptions.proxy_index]));
+        // process.stdout.write("\n"+JSON.stringify(this.PROXIES[fetchOptions.proxy_index]));
     }
 }
 function create_fetch_options(proxy, proxy_index) {

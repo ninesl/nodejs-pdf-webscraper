@@ -82,8 +82,12 @@ async function scrape_pdf(scrape_pdf_task) {
             if(response_info.response_text.includes(PDF_NOT_FOUND_HTML)) {
                 write_error(scrape_pdf_task.url)
                 return null
+            } else if(response_info.size > 500) {// PDF found but something is funky with it
+                write_error(scrape_pdf_task.url)
+                return null
             }
-            console.log(`response_info.content_type is ${response_info.content_type}. Retrying...`)
+            console.log(`response_info.content_type is ${response_info.content_type}.`)
+            console.log(`response_info.source_url is ${response_info.source_url}.`)
             console.log(`response_info.size is ${response_info.size}. Retrying...`)
             response_info = await scrape(scrape_pdf_task.url)
         }

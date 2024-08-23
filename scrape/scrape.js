@@ -5,7 +5,7 @@ import { fetchOptionsGenerator } from './fetch-options-generator.js'
 import { is_scrape_blocked } from '../shared/url.js';
 const fetchGen = new fetchOptionsGenerator()
 
-let P_LIMT_REQUEST_MAX = 13 //adjust as needed
+let P_LIMT_REQUEST_MAX = 5 //adjust as needed
 let REQUEST_LIMIT = pLimit(P_LIMT_REQUEST_MAX) 
 
 async function short_delay(ms_add, retry_count) {
@@ -58,6 +58,7 @@ async function scrape(url) {
         }
         //wait for response.blob() promise
         response_info['response_text'] = await response_info.body.text()
+        response_info['source_url'] = url
 
         // target specific implementation
         if(is_scrape_blocked(response_info.response_text)) {

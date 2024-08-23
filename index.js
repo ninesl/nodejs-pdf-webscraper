@@ -2,11 +2,14 @@ import { start_scrape_date } from './target/scrape_date.js';
 import { scrape_pdfs_by_date } from './target/scrape_pdf.js';
 import { split_array, keypress } from './shared/util.js';
 
+const START_DATE = new Date()
+START_DATE.setDate(START_DATE.getDate() - 1)
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away
-const START_DATE = new Date(1991, 0, 1)
 
-const TASKS_AT_A_TIME = 40
+console.log(START_DATE," ", END_DATE)
+
+const TASKS_AT_A_TIME = 10
 
 function set_dates() {
     let dates = [];
@@ -44,6 +47,7 @@ async function start_scrape_pdfs() {
         await Promise.all(task_split[i].map(async (task) => {
             try {
                 await task()
+                // return
             } catch (error) {
                 console.log('********start_scrape_pdfs() main.js********')
                 console.log(task, error)

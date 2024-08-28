@@ -4,12 +4,13 @@ import { split_array, keypress } from './shared/util.js';
 
 const START_DATE = new Date()
 START_DATE.setDate(START_DATE.getDate() - 1)
+// const START_DATE = new Date(2024, 7, 20)
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away
 
 console.log(START_DATE," ", END_DATE)
 
-const TASKS_AT_A_TIME = 10
+const TASKS_AT_A_TIME = 3
 
 function set_dates() {
     let dates = [];

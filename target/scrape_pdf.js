@@ -105,6 +105,7 @@ async function scrape_pdf(scrape_pdf_task) {
     
     const filePath = `${scrape_pdf_task.pdfDirectory}/${scrape_pdf_task.fileName}.pdf`;
     const fileStream = fs.createWriteStream(filePath);
+    console.log(`Downloading ${filePath}`)
     await pipelineAsync(response_info.body.stream(), fileStream).then(() => {
         const fileMessage = `${scrape_pdf_task.fileName}\n`;
         fs.appendFileSync(`${filePath}`, fileMessage);

@@ -35,7 +35,7 @@ async function scrape_pdfs_by_date(date) {
     process.stdout.write(`|${date_msg} `)
     for (const [pdf_code, country_code] of Object.entries(pdfs_to_get)) {
         let pdf_task = set_scrape_pdf_task(pdf_code, country_code, date)
-        if(!fs.existsSync(`${pdf_task.pdfDirectory}/${pdf_task.fileName}.pdf`)) {
+        if (!fs.existsSync(`${pdf_task.pdfDirectory}/${pdf_task.fileName}.pdf`)) {
             tasks.push(pdf_task)
             process.stdout.write(`#`)
         }
@@ -48,13 +48,13 @@ async function scrape_pdfs_by_date(date) {
         process.stdout.write(` ${task.pdfCode}`)
     })
     console.log()
-    if(tasks.length > 0) {
+    if (tasks.length > 0) {
         tasks = shuffle_array(tasks)
         const task_limit = 10
         let task_split = split_array(tasks, task_limit)
         pdfs_queued += tasks.length
-        console.log(tasks.length, "pdf tasks for", date_msg, "pdfs queued:",pdfs_queued)
-        for(let i = 0; i < task_split.length; i++){
+        console.log(tasks.length, "pdf tasks for", date_msg, "pdfs queued:", pdfs_queued)
+        for (let i = 0; i < task_split.length; i++) {
             await Promise.all(task_split[i].map(async (task) => {
                 try {
                     await scrape_pdf(task)
@@ -78,11 +78,11 @@ function write_error(url) {
 }
 async function scrape_pdf(scrape_pdf_task) {
     let response_info = await scrape(scrape_pdf_task.url).then(async (response_info) => {
-        while(!response_info.content_type.includes('application/pdf') || response_info.size < 5000) {// 5kb
-            if(response_info.response_text.includes(PDF_NOT_FOUND_HTML)) {
+        while (!response_info.content_type.includes('application/pdf') || response_info.size < 5000) {// 5kb
+            if (response_info.response_text.includes(PDF_NOT_FOUND_HTML)) {
                 write_error(scrape_pdf_task.url)
                 return null
-            } else if(response_info.size > 500) {// PDF found but something is funky with it
+            } else if (response_info.size > 500) {// PDF found but something is funky with it
                 write_error(scrape_pdf_task.url)
                 return null
             }
@@ -94,7 +94,7 @@ async function scrape_pdf(scrape_pdf_task) {
         return response_info
     });
 
-    if(!response_info) {
+    if (!response_info) {
         return;
     }
 
@@ -102,7 +102,7 @@ async function scrape_pdf(scrape_pdf_task) {
         console.log(`\nCreating directory: ${scrape_pdf_task.pdfDirectory}`);
         fs.mkdirSync(scrape_pdf_task.pdfDirectory, { recursive: true });
     }
-    
+
     const filePath = `${scrape_pdf_task.pdfDirectory}/${scrape_pdf_task.fileName}.pdf`;
     const fileStream = fs.createWriteStream(filePath);
     console.log(`Downloading ${filePath}`)
@@ -113,4 +113,4 @@ async function scrape_pdf(scrape_pdf_task) {
     })
 }
 
-export {scrape_pdfs_by_date}
+export { scrape_pdfs_by_date }

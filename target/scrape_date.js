@@ -6,22 +6,22 @@ function parse_date_table(response_text) {
 
     const start = response_text.indexOf(TOP_HTML) + TOP_HTML.length
     const end = response_text.indexOf(BOTTOM_HTML)
-    const dateTableHTML = response_text.substring(start,end)
+    const dateTableHTML = response_text.substring(start, end)
 
     //Checks if response_text is supposed to have dates
-    if(dateTableHTML.indexOf(NONE_HTML) > -1) {
+    if (dateTableHTML.indexOf(NONE_HTML) > -1) {
         console.log("No pdfs found for this date. Skipping...")
         return pdfs_this_date; //return blank dictionary
     }
 
     const rows = dateTableHTML.split('\n').filter(row => row.trim() !== '');
-    for(const row of rows) {
-        if(row.indexOf('<a') != -1) {
-            const {tr, cy} = parse_date_row(row)
+    for (const row of rows) {
+        if (row.indexOf('<a') != -1) {
+            const { tr, cy } = parse_date_row(row)
             pdfs_this_date[tr] = cy
         }
     }
-    if(Object.keys(pdfs_this_date).length == 0) {
+    if (Object.keys(pdfs_this_date).length == 0) {
         console.log("Blank pdfs_this_date. Trying again...")
         throw "Blank_Pdfs"
     }
@@ -52,4 +52,4 @@ async function start_scrape_date(date_combo) {
 
 // scrape_date(scrape_date_task)
 
-export {start_scrape_date}
+export { start_scrape_date }

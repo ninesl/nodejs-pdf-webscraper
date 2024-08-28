@@ -24,11 +24,11 @@ export const NONE_HTML = `404 HTML Tags`
 export function date_row(row) {
     let a = row.indexOf("pdf=") + 4
     let b = row.indexOf("&date=")
-    const tr = row.substring(a,b).trim()
+    const tr = row.substring(a, b).trim()
     a = row.indexOf("ctry=") + 5
     b = row.indexOf(`" `)
-    const cy = row.substring(a,b).trim()
-    return {tr, cy}
+    const cy = row.substring(a, b).trim()
+    return { tr, cy }
 }
 
 export function date_url(s_task) {

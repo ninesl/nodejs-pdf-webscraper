@@ -59,8 +59,3 @@ async function start_scrape_pdfs() {
 }
 
 await start_scrape_pdfs();
-console.log("INSERTING INTO DATABASE HERE")
-console.log("Tasks complete. Press any key to exit...")
-await keypress()
-console.log("Goodbye!")
-process.exit()

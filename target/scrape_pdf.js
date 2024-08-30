@@ -15,13 +15,18 @@ function set_scrape_pdf_task(pdfCode, countryCode, date) {
     let d = date.day.toString().padStart(2, '0')
     const fileName = `${pdfCode}_${m}${d}${date.year}`
     const date_string = `${date.month}/${date.day}/${date.year}`
+    const pdfDirectory = `${PARENT_PDF_FOLDER}/${countryCode}/${pdfCode}/${date.year}/${date.month}`
+
+    const txt_path = `${m}_${d}_${date.year}`
+    const txt_string = `${pdfDirectory}/${d}`
 
     const scrape_pdf_task = {
         pdfCode: pdfCode,
-        date: date_string,
+        txt_path: txt_path,
+        txt_string: txt_string,
         country: countryCode,
         url: determine_pdf_url(pdfCode, countryCode, date_string),
-        pdfDirectory: `${PARENT_PDF_FOLDER}/${countryCode}/${pdfCode}/${date.year}/${date.month}`,
+        pdfDirectory: pdfDirectory,
         fileName: fileName
     }
     return scrape_pdf_task
@@ -107,9 +112,11 @@ async function scrape_pdf(scrape_pdf_task) {
     const fileStream = fs.createWriteStream(filePath);
     console.log(`Downloading ${filePath}`)
     await pipelineAsync(response_info.body.stream(), fileStream).then(() => {
-        const fileMessage = `${scrape_pdf_task.fileName}\n`;
-        fs.appendFileSync(`${filePath}`, fileMessage);
-        console.log(`Downloaded ${filePath}`)
+        // txt file to have paths stored for usage later.
+        // redis or kafka could replace this but this is easier
+        const txt_path = `date_filepaths/${scrape_pdf_task.txt_path}.txt`
+        console.log(`Downloaded ${filePath} | Writing path to ${txt_path}`)
+        fs.appendFileSync(txt_path, `${scrape_pdf_task.txt_string}\n`);
     })
 }
 

@@ -21,6 +21,10 @@ export function determine_pdf_url(...args) {
     return hidden.pdf_url(...args)
 }
 
+export function determine_pdf_static_url(...args) {
+    return hidden.pdf_static_url(...args)
+}
+
 //scrape_date.js
 export const TOP_HTML = hidden.TOP_HTML
 export const BOTTOM_HTML = hidden.BOTTOM_HTML

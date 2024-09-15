@@ -1,10 +1,11 @@
 import { start_scrape_date } from './target/scrape_date.js';
 import { scrape_pdfs_by_date } from './target/scrape_pdf.js';
 import { split_array, keypress } from './shared/util.js';
+import { format } from 'util';
 
-const START_DATE = new Date()
-START_DATE.setDate(START_DATE.getDate() - 1)
-// const START_DATE = new Date(2024, 7, 20)
+// const START_DATE = new Date()
+// START_DATE.setDate(START_DATE.getDate() - 1)
+const START_DATE = new Date(2024, 7, 28)
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away
 
@@ -45,7 +46,9 @@ async function start_scrape_pdfs() {
     // plimit?
     for (let i = 0; i < task_split.length; i++) {
         console.log("Starting date scrape for", task_limit, "date tasks")
-        await Promise.all(task_split[i].map(async (task) => {
+        // await task_split[i]()
+        // await Promise.all(task_split[i].map(async (task) => {
+        await task_split[i].map(async (task) => {
             try {
                 await task()
                 // return
@@ -54,8 +57,8 @@ async function start_scrape_pdfs() {
                 console.log(task, error)
                 console.log('****************')
             }
-        }))
+        })
     }
 }
 
-await start_scrape_pdfs();
+await start_scrape_pdfs()

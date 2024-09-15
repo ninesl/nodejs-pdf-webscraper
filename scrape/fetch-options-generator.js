@@ -3,7 +3,7 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 import fs from 'fs';
 import { shuffle_array } from '../shared/util.js';
 import { PROXY_FILENAME } from '../shared/url.js';
-
+const PROXY_CHAR = '@'
 export class fetchOptionsGenerator {
     constructor() {
         this.threshold = 50
@@ -60,7 +60,7 @@ function create_fetch_options(proxy, proxy_index) {
                 "Sec-Fetch-User": "?1",
                 "Upgrade-Insecure-Requests": "1"
             },
-            agent: new HttpsProxyAgent(`http://${proxy.host}:${proxy.port}`)
+            agent: new HttpsProxyAgent(`${proxy.host}${PROXY_CHAR}${proxy.port}`)
             // agentOptions: {
             //     rejectUnauthorized: false
             // }
@@ -84,7 +84,7 @@ function load_proxies(filePath) {
     let success = 0
     const proxyList = fs.readFileSync(filePath, 'utf-8').trim().split('\n');
     return proxyList.map(proxy => {
-        let [host, port] = proxy.split(':');
+        let [host, port] = proxy.split(PROXY_CHAR);
         port = port.trim()
         return { host, port, retries, success };
     });

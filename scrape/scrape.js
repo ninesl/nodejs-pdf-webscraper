@@ -13,7 +13,7 @@ async function short_delay(ms_add, retry_count) {
     if (retry_count > 10) {
         retry_count = 5
     }
-    let ms = (ms_add + jitter)// * ((1 + retry_count) / 2);
+    let ms = (ms_add + jitter) * ((1 + retry_count) / 2);
     return new Promise(resolve => setTimeout(resolve, ms + Math.floor(Math.random() * 100)));
     // adds random 0-.1 sec
 }

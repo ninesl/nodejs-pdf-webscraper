@@ -3,15 +3,15 @@ import { scrape_pdfs_by_date } from './target/scrape_pdf.js';
 import { split_array, keypress } from './shared/util.js';
 import { format } from 'util';
 
-// const START_DATE = new Date()
-// START_DATE.setDate(START_DATE.getDate() - 1)
-const START_DATE = new Date(2024, 7, 28)
+const START_DATE = new Date()
+START_DATE.setDate(START_DATE.getDate() - 1)
+// const START_DATE = new Date(2024, 7, 27)
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away
 
 console.log(START_DATE, " ", END_DATE)
 
-const TASKS_AT_A_TIME = 3
+const TASKS_AT_A_TIME = 20
 
 function set_dates() {
     let dates = [];
@@ -43,21 +43,17 @@ async function start_scrape_pdfs() {
     // scrape_tasks = shuffle_array(scrape_tasks)
     const task_limit = TASKS_AT_A_TIME
     let task_split = split_array(scrape_tasks, task_limit)
-    // plimit?
+    console.log("Starting date scrape for", task_limit, "date tasks")
     for (let i = 0; i < task_split.length; i++) {
-        console.log("Starting date scrape for", task_limit, "date tasks")
-        // await task_split[i]()
-        // await Promise.all(task_split[i].map(async (task) => {
-        await task_split[i].map(async (task) => {
+        await Promise.all(task_split[i].map(async (task) => {
             try {
                 await task()
-                // return
             } catch (error) {
                 console.log('********start_scrape_pdfs() main.js********')
                 console.log(task, error)
                 console.log('****************')
             }
-        })
+        }))
     }
 }
 

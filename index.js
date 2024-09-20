@@ -4,7 +4,7 @@ import { split_array, keypress } from './shared/util.js';
 import { format } from 'util';
 
 const START_DATE = new Date()
-START_DATE.setDate(START_DATE.getDate() - 1)
+START_DATE.setDate(START_DATE.getDate() - 2)
 // const START_DATE = new Date(2024, 7, 27)
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away

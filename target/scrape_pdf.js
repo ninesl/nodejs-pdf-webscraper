@@ -20,6 +20,8 @@ function set_scrape_pdf_task(pdfCode, countryCode, date) {
     const txt_path = `${m}_${d}_${date.year}`
     const txt_string = `${pdfDirectory}/${d}`
 
+    const fileNameBackup = `${m}-${d}-${date.year}`
+
     const scrape_pdf_task = {
         pdfCode: pdfCode,
         txt_path: txt_path,
@@ -28,7 +30,8 @@ function set_scrape_pdf_task(pdfCode, countryCode, date) {
         url: determine_pdf_url(pdfCode, countryCode, date_string),
         pdfDirectory: pdfDirectory,
         fileName: fileName,
-        date: date
+        fileNameBackup: fileNameBackup,
+        date: date,
     }
     return scrape_pdf_task
 }
@@ -121,9 +124,12 @@ async function scrape_pdf(scrape_pdf_task) {
     await pipelineAsync(response_info.body.stream(), fileStream).then(() => {
         // txt file to have paths stored for usage later.
         // redis or kafka could replace this but this is easier
+
         const txt_path = `date_filepaths/${scrape_pdf_task.txt_path}.txt`
-        console.log(`Downloaded ${filePath} | Writing path to ${txt_path}`)
+        const backup_path = `date_filepaths_gen/${scrape_pdf_task.date.year}/${scrape_pdf_task.date.month}/${scrape_pdf_task.fileNameBackup}.txt`
+        console.log(`Downloaded ${filePath} | Writing path to ${txt_path} | Writing path to ${backup_path}`)
         fs.appendFileSync(txt_path, `${scrape_pdf_task.txt_string}\n`);
+        fs.appendFileSync(backup_path, `${scrape_pdf_task.txt_string}\n`);
     })
 }
 

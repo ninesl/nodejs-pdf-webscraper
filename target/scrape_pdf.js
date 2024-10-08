@@ -118,6 +118,7 @@ async function scrape_pdf(scrape_pdf_task) {
         fs.mkdirSync(scrape_pdf_task.pdfDirectory, { recursive: true });
     }
 
+
     const filePath = `${scrape_pdf_task.pdfDirectory}/${scrape_pdf_task.fileName}.pdf`;
     const fileStream = fs.createWriteStream(filePath);
     console.log(`Downloading ${filePath}`)
@@ -127,6 +128,16 @@ async function scrape_pdf(scrape_pdf_task) {
 
         const txt_path = `date_filepaths/${scrape_pdf_task.txt_path}.txt`
         const backup_path = `date_filepaths_gen/${scrape_pdf_task.date.year}/${scrape_pdf_task.date.month}/${scrape_pdf_task.fileNameBackup}.txt`
+
+        if (!fs.existsSync(`date_filepaths_gen/${scrape_pdf_task.date.year}`)) {
+            console.log(`\nCreating directory: date_filepaths_gen/${scrape_pdf_task.date.year}`);
+            fs.mkdirSync(`date_filepaths_gen/${scrape_pdf_task.date.year}`, { recursive: true });
+        }
+        if (!fs.existsSync(`date_filepaths_gen/${scrape_pdf_task.date.year}/${scrape_pdf_task.date.month}`)) {
+            console.log(`\nCreating directory: date_filepaths_gen/${scrape_pdf_task.date.year}/${scrape_pdf_task.date.month}`);
+            fs.mkdirSync(`date_filepaths_gen/${scrape_pdf_task.date.year}/${scrape_pdf_task.date.month}`, { recursive: true });
+        }
+
         console.log(`Downloaded ${filePath} | Writing path to ${txt_path} | Writing path to ${backup_path}`)
         fs.appendFileSync(txt_path, `${scrape_pdf_task.txt_string}\n`);
         fs.appendFileSync(backup_path, `${scrape_pdf_task.txt_string}\n`);

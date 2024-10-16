@@ -5,7 +5,7 @@ import { format } from 'util';
 
 const START_DATE = new Date()
 START_DATE.setDate(START_DATE.getDate() - 1)
-// const START_DATE = new Date(2024, 8, 30)
+// const START_DATE = new Date(2024, 9, 8)
 const END_DATE = new Date()
 END_DATE.setDate(END_DATE.getDate() - 1) // yesterday... my troubles seemed so far away
 
